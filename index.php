@@ -82,7 +82,6 @@ if ($logfile != "" and $action == "delete") {
     ?>
 
     <?
-    #$issslstripup = exec("ps auxww | grep sslstrip | grep -v -e grep");
     $isup = exec($mod_isup);
     if ($isup != "") {
         echo "&nbsp;$mod_alias <font color=\"lime\"><b>enabled</b></font>.&nbsp; | <a href=\"includes/module_action.php?service=$mod_name&action=stop&page=module\"><b>stop</b></a><br />";
@@ -126,40 +125,28 @@ Loading, please wait...
             } else {
                 $filename = $mod_logs;
             }
-            
-            /*
-            if ( 0 < filesize( $filename ) ) {
-                $fh = fopen($filename, "r"); // or die("Could not open file.");
-                $data = fread($fh, filesize($filename)); // or die("Could not read file.");
-                fclose($fh);
-            }
-            */
+     
             
             if ($mod_sslstrip_filter == "LogEx.py") {
                 $exec = "$bin_python $mod_path/includes/filters/LogEx.py $filename";
                 $output = exec_fruitywifi($exec); 
                 
-                //$data = implode("\n",$output);
                 $data = $output;
             } else if ($mod_sslstrip_filter == "ParseLog.py") {
                 $exec = "$bin_python $mod_path/includes/filters/ParseLog.py $filename $mod_path/includes/filters";
                 $output = exec_fruitywifi($exec);
-                        
-                //$data = implode("\n",$output);
+                
                 $data = $output;
             } else {
             
                 $data = open_file($filename);
             
                 $data_array = explode("\n", $data);
-                //$data = implode("\n",array_reverse($data_array));
-                //$data = array_reverse($data_array);
                 $data = $data_array;
             }
         
         ?>
         <textarea id="output" class="module-content" style="font-family: courier;"><?
-            //htmlentities($data)
         
             for ($i=0; $i < count($data); $i++) {
                 echo htmlentities($data[$i]) . "\n";
@@ -207,7 +194,6 @@ Loading, please wait...
 			} else {
 				$data = "";
 			}
-			
         ?>
         <textarea id="inject" name="newdata" class="module-content" style="font-family: courier;"><?=htmlspecialchars($data)?></textarea>
         <input type="hidden" name="type" value="filters">
@@ -229,7 +215,6 @@ Loading, please wait...
         	<?
         	$template_path = "$mod_path/includes/filters/resources/";
         	$templates = glob($template_path.'*');
-        	//print_r($templates);
 
         	for ($i = 0; $i < count($templates); $i++) {
             	$filename = str_replace($template_path,"",$templates[$i]);
