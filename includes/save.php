@@ -1,6 +1,6 @@
 <? 
 /*
-	Copyright (C) 2013-2015 xtr4nge [_AT_] gmail.com
+	Copyright (C) 2013-2016 xtr4nge [_AT_] gmail.com
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -17,7 +17,8 @@
 */ 
 ?>
 <?
-include "../login_check.php";
+
+include "../../../login_check.php";
 include "../../../config/config.php";
 include "../_info_.php";
 include "../../../functions.php";
@@ -45,8 +46,10 @@ $new_rename_file = $_POST["new_rename_file"];
 
 if ($type == "inject") {
 
-    if ($newdata != "") { $newdata = ereg_replace(13,  "", $newdata);
-        $exec = "$bin_echo '$newdata' | base64 --decode > $mod_path/includes/inject.txt";
+    if ($newdata != "") {
+		//$newdata = ereg_replace(13,  "", $newdata); // DEPRECATED
+        $newdata = preg_replace("/[\n\r]/",  "", $newdata);
+		$exec = "$bin_echo '$newdata' | base64 --decode > $mod_path/includes/inject.txt";
         exec_fruitywifi($exec);
         
         $exec = "$bin_dos2unix $mod_path/includes/inject.txt";
@@ -60,8 +63,10 @@ if ($type == "inject") {
 
 if ($type == "tamperer") {
 
-    if ($newdata != "") { $newdata = ereg_replace(13,  "", $newdata);
-        $exec = "$bin_echo '$newdata' | base64 --decode > $mod_path/includes/app_cache_poison/config.ini";
+    if ($newdata != "") {
+		//$newdata = ereg_replace(13,  "", $newdata); // DEPRECATED
+        $newdata = preg_replace("/[\n\r]/",  "", $newdata);
+		$exec = "$bin_echo '$newdata' | base64 --decode > $mod_path/includes/app_cache_poison/config.ini";
         exec_fruitywifi($exec);
         
         $exec = "$bin_dos2unix $mod_path/includes/app_cache_poison/config.ini";
@@ -78,7 +83,9 @@ if ($type == "templates") {
 		
 		if ($tempname != "0") {
 			// SAVE TAMPLATE
-			if ($newdata != "") { $newdata = ereg_replace(13,  "", $newdata);
+			if ($newdata != "") {
+				//$newdata = ereg_replace(13,  "", $newdata); // DEPRECATED
+				$newdata = preg_replace("/[\n\r]/",  "", $newdata);
 				$template_path = "$mod_path/includes/app_cache_poison/templates";
         		$exec = "$bin_echo '$newdata' | base64 --decode > $template_path/$tempname";
                 exec_fruitywifi($exec);
@@ -127,7 +134,9 @@ if ($type == "filters") {
 		
 		if ($tempname != "0") {
 			// SAVE TAMPLATE
-			if ($newdata != "") { $newdata = ereg_replace(13,  "", $newdata);
+			if ($newdata != "") {
+				//$newdata = ereg_replace(13,  "", $newdata); // DEPRECATED
+				$newdata = preg_replace("/[\n\r]/",  "", $newdata);
 				$template_path = "$mod_path/includes/filters/resources/";
         		$exec = "$bin_echo '$newdata' | base64 --decode > $template_path/$tempname";
                 exec_fruitywifi($exec);

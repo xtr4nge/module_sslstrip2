@@ -1,7 +1,12 @@
 module_sslstrip2
 ===============
 
-FruityWifi sslstrip2 module.
+FruityWiFi sslstrip2 module.
+
+
+v1.1
+---------------------------------
+- PHP7 compatibility issues has been fixed
 
 
 v1.0
